@@ -149,11 +149,12 @@ const LANE_W      = 2.8;
 const GROUND_Y    = 0;
 const TRAIN_H     = 2.8;  // roof height of a short train (rideable)
 const TALL_TRAIN_H = 5;   // roof height of tall train (can't ride)
-const GRAV        = 18;   // units/s²
-const JUMP_V      = 11;   // initial jump velocity
+const GRAV        = 52;   // units/s² — snappy jumps
+const JUMP_V      = 15;   // initial jump velocity
 const PLAYER_H    = 1.6;  // half-height of player box
 
-function laneX(l) { return (l - 1) * LANE_W; }
+// Camera right = world -X, so negate to match screen left/right
+function laneX(l) { return -(l - 1) * LANE_W; }
 
 // ── MATERIALS ────────────────────────────────────────────────────────────────
 const mGround   = new THREE.MeshLambertMaterial({ color: 0x1a1028 });
@@ -470,7 +471,7 @@ function update(t) {
   score = Math.floor(distance * 2);
 
   // Player X lerp
-  player.x += (player.targetX - player.x) * Math.min(1, dt * 12);
+  player.x += (player.targetX - player.x) * Math.min(1, dt * 20);
 
   // Determine ground beneath player
   // Check if standing/landing on a train
